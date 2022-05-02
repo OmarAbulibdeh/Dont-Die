@@ -1,4 +1,5 @@
 import processing.sound.*; 
+import g4p_controls.*;
 
 //Variables 
 int meteorSize = 50;
@@ -14,10 +15,11 @@ String message = "Please, Do Try Again If You Had Fun :) ";
 boolean isCollided = false; // detects the collison between the Meteordrops and the player
 boolean lost = true;
 boolean hasHit = false;
+boolean paused = false;
+boolean moveMouse = true;
 
 ArrayList stars;
 Meteor[] Meteor;
-
 //images
 PImage ufoImg;
 PImage meteorImg;
@@ -34,6 +36,7 @@ void fallingMeteor(int xMin, int xMax, int yMin, int yMax, int num) {
 }
 void setup() {
   size(1280, 720);
+  createGUI();
   background(0);
 
   ufoImg = loadImage("ufo.png");
@@ -53,41 +56,55 @@ void setup() {
 
 void draw() {
   background(0);
-  background(0);
 
   //Meteor.trail.add(new PVector);
-
+  if (!paused){
   //background stars
-  for (int i = 0; i <= stars.size()-1; i++) {
-    Star starUse = (Star) stars.get(i);
-    starUse.display();
-
-    //Lives  
-   if (lives <= 0) {
-    text("Your Final Score Is: "+(int)score, 400, 360);
-    image(explosionImg, playerXCor,playerYCor);
-    explosionImg.resize(50, 50);
-    println(message);
-    noLoop();
-  }
-    
-    fill(255);
-    text("Lives: "+(int)lives, width-200, 40);
-    textSize(30);
-  }
-
-  drawPlayer();
-
-  if (!isCollided) {      // if the colliosn happens then:
-    moveMeteor();
-    if (score > limit && score < limit + 1) {
-      fallingMeteor(-100, width + 20, -260, -80, difficulty); 
-      difficulty += 10; 
-      limit += 20;
+    noStroke();
+    moveMouse = true;
+    for (int i = 0; i <= stars.size()-1; i++) {
+      Star starUse = (Star) stars.get(i);
+      starUse.display();
+  
+      //Lives  
+     if (lives <= 0) {
+      text("Your Final Score Is: "+(int)score, 400, 360);
+      image(explosionImg, playerXCor,playerYCor);
+      explosionImg.resize(50, 50);
+      println(message);
+      noLoop();
+    }
+      
+      fill(255);
+      text("Lives: "+(int)lives, width-200, 40);
+      textSize(30);
+    }
+  
+    drawPlayer();
+  
+    if (!isCollided) {      // if the colliosn happens then:
+      moveMeteor();
+      if (score > limit && score < limit + 1) {
+        fallingMeteor(-100, width + 20, -260, -80, difficulty); 
+        difficulty += 10; 
+        limit += 20;
+      }
     }
   }
+  else {
+    moveMouse = false;
+    text("Lives: "+(int)lives, width-200, 40);
+    text("Score: "+(int)score, 10, 40);
+    for (int i = 0; i <= stars.size()-1; i++) {
+      Star starUse = (Star) stars.get(i);
+      starUse.display();
+    }
+    for (int i = 0; i < Meteor.length; i++) {
+      Meteor[i].display();
+    }
+    drawPlayer();
+  }
 }
-
 void moveMeteor() {
   for (int i = 0; i < Meteor.length; i++) {  // where the next group offalling Meteor will be summoned
     if (Meteor[i].yCor > height) {
@@ -97,18 +114,17 @@ void moveMeteor() {
     Meteor[i].drop(random(1, 20));
 
     // detecting if the colliosn of the player happened with thefalling Meteor
-    boolean conditionXLeft = Meteor[i].xCor + Meteor[i].size >= playerXCor;
-    boolean conditionXRight = Meteor[i].xCor + Meteor[i].size <= playerXCor + playerWidth + 4;
-    boolean conditionUp =  Meteor[i].yCor >= playerYCor;
-    boolean conditionDown = Meteor[i].yCor + Meteor[i].size <= playerYCor + playerHeight;
+      boolean conditionXLeft = Meteor[i].xCor + Meteor[i].size >= playerXCor;
+      boolean conditionXRight = Meteor[i].xCor + Meteor[i].size <= playerXCor + playerWidth + 4;
+      boolean conditionUp =  Meteor[i].yCor >= playerYCor;
+      boolean conditionDown = Meteor[i].yCor + Meteor[i].size <= playerYCor + playerHeight;
 
-    if (conditionXLeft && conditionXRight && conditionUp && conditionDown) {
-      isCollided = true;
+      if (conditionXLeft && conditionXRight && conditionUp && conditionDown) {
+        isCollided = true;
+        hasHit = true;
+        lives = lives -1;
     }
-    else if (isCollided && hasHit == false) {
-      lives = lives -1;
-      hasHit = true;
-    }
+    
     
   else {
     isCollided = false;
@@ -140,10 +156,12 @@ void drawPlayer() {
 
 // Allows player to control the avatar with cursor (learned in class... read notes to finish)
 void mouseDragged() {
-  if (mouseX >= 0 && mouseX <= width - playerWidth + 1) {
-    playerXCor = mouseX;
-  }
-  if (mouseY >= 0 && mouseY <= height - playerHeight) {
-    playerYCor = mouseY;
+  if(moveMouse){
+    if (mouseX >= 0 && mouseX <= width - playerWidth + 1) {
+      playerXCor = mouseX;
+    }
+    if (mouseY >= 0 && mouseY <= height - playerHeight) {
+      playerYCor = mouseY;
+    }
   }
 }
