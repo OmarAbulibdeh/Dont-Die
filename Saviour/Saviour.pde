@@ -17,6 +17,7 @@ boolean lost = true;
 boolean hasHit = false;
 boolean paused = false;
 boolean moveMouse = true;
+boolean start = false;
 
 ArrayList stars;
 Meteor[] Meteor;
@@ -56,6 +57,12 @@ void setup() {
 
 void draw() {
   background(0);
+  //if (start){
+  //  loop();
+  //}
+  //else{
+  //  noLoop();
+  //}
 
   //Meteor.trail.add(new PVector);
   if (!paused){
@@ -164,4 +171,11 @@ void mouseDragged() {
       playerYCor = mouseY;
     }
   }
+}
+
+void reset(){
+  score = 0;
+  lives = Lives.getValueI();
+  difficulty = 10;
+  fallingMeteor(-100, width + 20, -250, -80, difficulty);
 }
