@@ -18,15 +18,15 @@ class Meteor{
   }
   
    void display(){
+    
+   for(int trails = 0; trails < 10; trails++){
+     float range = random(-meteorSize,0);
+     stroke(255, 165, 0);
+     line(xCor-range, yCor+25, xCor-range, yCor-(random(60,80)));
+
+    }
     fill(200, 100, 50);
     image(meteorImg, xCor, yCor);
     meteorImg.resize(meteorSize, meteorSize);
-    
-    for(int trails = 0; trails < 10; trails++){
-      float range = random(-meteorSize/2,meteorSize/2);
-      stroke(255, 165, 0);
-      line(xCor-range, yCor-5, xCor-range, yCor-(random(50,70)));
-
-    }
   }
 }
