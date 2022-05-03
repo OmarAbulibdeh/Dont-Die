@@ -43,6 +43,12 @@ void setup() {
   ufoImg = loadImage("ufo.png");
   meteorImg = loadImage("meteor.png");
   explosionImg = loadImage("explosion.png");
+  
+  explosionImg.resize(300, 300);
+  
+  
+      
+     
 
 
   //background stars
@@ -54,16 +60,23 @@ void setup() {
 
   fallingMeteor(-100, width + 20, -250, -80, difficulty);  // spawning in the Meteordrops
 }
+// Players Avatar
+void drawPlayer() {
+  stroke(0);
+  strokeWeight(2);
+  fill(0, 250, 0);
+  image(ufoImg, playerXCor, playerYCor);
+  ufoImg.resize(50, 50);
+  
+  //lives
+   fill(255);
+   text("Lives: "+(int)lives, width-150, 40);
+   textSize(40);
+}
 
 void draw() {
   background(0);
-  //if (start){
-  //  loop();
-  //}
-  //else{
-  //  noLoop();
-  //}
-
+  
   //Meteor.trail.add(new PVector);
   if (!paused){
   //background stars
@@ -72,21 +85,25 @@ void draw() {
     for (int i = 0; i <= stars.size()-1; i++) {
       Star starUse = (Star) stars.get(i);
       starUse.display();
+      
+    }
+  }
+
   
       //Lives  
      if (lives <= 0) {
-      text("Your Final Score Is: "+(int)score, 400, 360);
-      image(explosionImg, playerXCor,playerYCor);
-      explosionImg.resize(50, 50);
-      println(message);
-      noLoop();
-    }
-      
+ 
+      image(explosionImg, playerXCor - 140,playerYCor-150);
+      println(frameCount, message);
       fill(255);
-      text("Lives: "+(int)lives, width-200, 40);
-      textSize(30);
-    }
-  
+      textSize(40);
+      text("Your Final Score Is: "+(int)score, 400, 40);
+      
+      noLoop();
+    
+     }
+    
+
     drawPlayer();
   
     if (!isCollided) {      // if the colliosn happens then:
@@ -97,7 +114,7 @@ void draw() {
         limit += 20;
       }
     }
-  }
+  
   else {
     moveMouse = false;
     text("Lives: "+(int)lives, width-200, 40);
@@ -146,17 +163,7 @@ void moveMeteor() {
 
   fill(255);
   text("Score: "+(int)score, 10, 40);
-  textSize(30);
-}
-
-
-// Players Avatar
-void drawPlayer() {
-  stroke(0);
-  strokeWeight(2);
-  fill(0, 250, 0);
-  image(ufoImg, playerXCor, playerYCor);
-  ufoImg.resize(50, 50);
+  textSize(40);
 }
 
 
