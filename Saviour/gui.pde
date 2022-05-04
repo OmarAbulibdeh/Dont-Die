@@ -171,8 +171,8 @@ public void createGUI(){
   MeteorSize = new GSlider(window1, 4, 207, 294, 40, 10.0);
   MeteorSize.setShowValue(true);
   MeteorSize.setShowLimits(true);
-  MeteorSize.setLimits(50, 10, 200);
-  MeteorSize.setNbrTicks(190);
+  MeteorSize.setLimits(50, 30, 60);
+  MeteorSize.setNbrTicks(20);
   MeteorSize.setStickToTicks(true);
   MeteorSize.setShowTicks(true);
   MeteorSize.setNumberFormat(G4P.INTEGER, 0);
