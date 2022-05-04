@@ -20,6 +20,13 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:463682:
   paused = !paused;
+  
+  if (paused){
+    button1.setText("Resume");
+  }
+  else {
+    button1.setText("Pause");
+  }
 } //_CODE_:button1:463682:
 
 public void difficultyChange(GCustomSlider source, GEvent event) { //_CODE_:getDifficulty:897415:
