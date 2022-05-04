@@ -27,6 +27,6 @@ class Meteor{
     }
     fill(200, 100, 50);
     image(meteorImg, xCor, yCor);
-    meteorImg.resize(meteorSize, meteorSize);
+    
   }
 }
