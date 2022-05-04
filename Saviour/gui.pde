@@ -20,7 +20,6 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
 
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:463682:
   paused = !paused;
-  
   if (paused){
     button1.setText("Resume");
   }
@@ -31,6 +30,7 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:4636
 
 public void difficultyChange(GCustomSlider source, GEvent event) { //_CODE_:getDifficulty:897415:
   difficulty = getDifficulty.getValueI();
+  reset();
 } //_CODE_:getDifficulty:897415:
 
 public void livesChange(GSlider source, GEvent event) { //_CODE_:Lives:537091:
@@ -38,15 +38,53 @@ public void livesChange(GSlider source, GEvent event) { //_CODE_:Lives:537091:
 } //_CODE_:Lives:537091:
 
 public void resetTrue(GButton source, GEvent event) { //_CODE_:button2:551383:
+  loop();
   reset();
+  difficulty = 10;
 } //_CODE_:button2:551383:
 
 public void Easy(GButton source, GEvent event) { //_CODE_:button3:386511:
-  println("button2 - GButton >> GEvent." + event + " @ " + millis());
+  reset();
+  difficulty = 5;
+  lives = 10;
 } //_CODE_:button3:386511:
 
+public void button4_click1(GButton source, GEvent event) { //_CODE_:button4:509320:
+  reset();
+  difficulty = 10;
+  lives = 5;
+} //_CODE_:button4:509320:
+
+public void button5_click1(GButton source, GEvent event) { //_CODE_:button5:336071:
+  reset();
+  difficulty = 20;
+  lives = 3;
+} //_CODE_:button5:336071:
+
+public void button6_click1(GButton source, GEvent event) { //_CODE_:button6:874250:
+  reset();
+  difficulty = 30;
+  lives = 2;
+} //_CODE_:button6:874250:
+
+public void button7_click1(GButton source, GEvent event) { //_CODE_:button7:558653:
+  reset();
+  difficulty = 100;
+  lives = 99999;
+} //_CODE_:button7:558653:
+
+public void veryHard(GButton source, GEvent event) { //_CODE_:button8:360006:
+  reset();
+  difficulty = 100;
+  lives = 1;
+} //_CODE_:button8:360006:
+
+public void sizeChange(GSlider source, GEvent event) { //_CODE_:MeteorSize:856759:
+  println("slider1 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:MeteorSize:856759:
+
 synchronized public void win_draw2(PApplet appc, GWinData data) { //_CODE_:window2:283432:
-  appc.background(230);
+  meteorSize = MeteorSize.getValueI();
 } //_CODE_:window2:283432:
 
 public void startGame(GButton source, GEvent event) { //_CODE_:Start:585618:
@@ -62,14 +100,16 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  window1 = GWindow.getWindow(this, "Window title", 0, 0, 300, 300, JAVA2D);
+  window1 = GWindow.getWindow(this, "Window title", 0, 0, 300, 350, JAVA2D);
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
   button1 = new GButton(window1, 4, 150, 79, 30);
   button1.setText("Pause");
   button1.addEventHandler(this, "button1_click1");
-  getDifficulty = new GCustomSlider(window1, 2, 30, 294, 40, "red_yellow18px");
+  getDifficulty = new GCustomSlider(window1, 3, 30, 294, 40, "red_yellow18px");
+  getDifficulty.setShowValue(true);
+  getDifficulty.setShowLimits(true);
   getDifficulty.setLimits(10, 1, 100);
   getDifficulty.setNbrTicks(100);
   getDifficulty.setStickToTicks(true);
@@ -78,8 +118,10 @@ public void createGUI(){
   getDifficulty.setLocalColorScheme(GCScheme.GOLD_SCHEME);
   getDifficulty.setOpaque(false);
   getDifficulty.addEventHandler(this, "difficultyChange");
-  Lives = new GSlider(window1, 3, 97, 294, 40, 10.0);
-  Lives.setLimits(10, 1, 50);
+  Lives = new GSlider(window1, 2, 98, 294, 40, 10.0);
+  Lives.setShowValue(true);
+  Lives.setShowLimits(true);
+  Lives.setLimits(4, 1, 50);
   Lives.setNbrTicks(50);
   Lives.setStickToTicks(true);
   Lives.setShowTicks(true);
@@ -99,13 +141,48 @@ public void createGUI(){
   label2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label2.setText("Lives");
   label2.setOpaque(false);
-  label3 = new GLabel(window1, 5, 192, 80, 20);
+  label3 = new GLabel(window1, 5, 243, 80, 20);
   label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label3.setText("Set difficulties");
   label3.setOpaque(false);
-  button3 = new GButton(window1, 4, 219, 80, 30);
+  button3 = new GButton(window1, 5, 274, 80, 30);
   button3.setText("Easy");
   button3.addEventHandler(this, "Easy");
+  button4 = new GButton(window1, 96, 274, 80, 30);
+  button4.setText("Medium");
+  button4.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+  button4.addEventHandler(this, "button4_click1");
+  button5 = new GButton(window1, 184, 273, 80, 30);
+  button5.setText("Hard");
+  button5.setLocalColorScheme(GCScheme.RED_SCHEME);
+  button5.addEventHandler(this, "button5_click1");
+  button6 = new GButton(window1, 5, 311, 80, 30);
+  button6.setText("Impossible");
+  button6.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
+  button6.addEventHandler(this, "button6_click1");
+  button7 = new GButton(window1, 96, 311, 80, 30);
+  button7.setText("God Mode");
+  button7.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  button7.addEventHandler(this, "button7_click1");
+  button8 = new GButton(window1, 184, 311, 80, 30);
+  button8.setText("Aim 100");
+  button8.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  button8.addEventHandler(this, "veryHard");
+  MeteorSize = new GSlider(window1, 4, 207, 294, 40, 10.0);
+  MeteorSize.setShowValue(true);
+  MeteorSize.setShowLimits(true);
+  MeteorSize.setLimits(50, 10, 200);
+  MeteorSize.setNbrTicks(190);
+  MeteorSize.setStickToTicks(true);
+  MeteorSize.setShowTicks(true);
+  MeteorSize.setNumberFormat(G4P.INTEGER, 0);
+  MeteorSize.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+  MeteorSize.setOpaque(false);
+  MeteorSize.addEventHandler(this, "sizeChange");
+  label4 = new GLabel(window1, 1, 186, 80, 20);
+  label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label4.setText("Meteor Size");
+  label4.setOpaque(false);
   window2 = GWindow.getWindow(this, "Window title", 640, 0, 100, 50, JAVA2D);
   window2.noLoop();
   window2.setActionOnClose(G4P.CLOSE_WINDOW);
@@ -129,5 +206,12 @@ GLabel label1;
 GLabel label2; 
 GLabel label3; 
 GButton button3; 
+GButton button4; 
+GButton button5; 
+GButton button6; 
+GButton button7; 
+GButton button8; 
+GSlider MeteorSize; 
+GLabel label4; 
 GWindow window2;
 GButton Start; 
