@@ -88,7 +88,7 @@ synchronized public void win_draw2(PApplet appc, GWinData data) { //_CODE_:windo
 } //_CODE_:window2:283432:
 
 public void startGame(GButton source, GEvent event) { //_CODE_:Start:585618:
-  start = !start;
+  loop();
 } //_CODE_:Start:585618:
 
 
