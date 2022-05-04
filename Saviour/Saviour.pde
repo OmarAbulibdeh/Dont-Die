@@ -64,7 +64,7 @@ void drawPlayer() {
   
   //lives
    fill(255);
-   text("Lives: "+(int)lives, width-150, 40);
+   text("Lives: "+(int)lives, width-200, 40);
    textSize(40);
 }
 
