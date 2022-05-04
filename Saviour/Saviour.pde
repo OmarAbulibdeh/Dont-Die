@@ -37,6 +37,7 @@ void fallingMeteor(int xMin, int xMax, int yMin, int yMax, int num) {
 void setup() {
   size(1280, 720);
   createGUI();
+  noLoop();
   background(0);
 
   ufoImg = loadImage("ufo.png");
