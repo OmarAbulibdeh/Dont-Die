@@ -45,6 +45,8 @@ void setup() {
   explosionImg = loadImage("explosion.png");
   
   explosionImg.resize(300, 300);
+  ufoImg.resize(50, 50);
+  meteorImg.resize(meteorSize, meteorSize);
 
   //background stars
   stars = new ArrayList();
@@ -61,12 +63,13 @@ void drawPlayer() {
   strokeWeight(2);
   fill(0, 250, 0);
   image(ufoImg, playerXCor, playerYCor);
-  ufoImg.resize(50, 50);
+  
   
   //lives
    fill(255);
-   text("Lives: "+(int)lives, width-200, 40);
    textSize(40);
+   text("Lives: "+(int)lives, width-200, 40);
+   
 }
 
 void draw() {
