@@ -11,7 +11,6 @@ int difficulty = 10;  //the higher the diffucluty the more Meteor drops offallin
 int limit = 10;
 float score = 0;
 int lives = 4;
-String message = "Please, Do Try Again If You Had Fun :) ";
 boolean isCollided = false; // detects the collison between the Meteordrops and the player
 boolean lost = true;
 boolean hasHit = false;
@@ -45,11 +44,6 @@ void setup() {
   explosionImg = loadImage("explosion.png");
   
   explosionImg.resize(300, 300);
-  
-  
-      
-     
-
 
   //background stars
   stars = new ArrayList();
@@ -76,7 +70,7 @@ void drawPlayer() {
 
 void draw() {
   background(0);
-  
+
   //Meteor.trail.add(new PVector);
   if (!paused){
   //background stars
@@ -85,25 +79,20 @@ void draw() {
     for (int i = 0; i <= stars.size()-1; i++) {
       Star starUse = (Star) stars.get(i);
       starUse.display();
-      
-    }
-  }
 
   
       //Lives  
      if (lives <= 0) {
- 
       image(explosionImg, playerXCor - 140,playerYCor-150);
-      println(frameCount, message);
       fill(255);
       textSize(40);
       text("Your Final Score Is: "+(int)score, 400, 40);
       
       noLoop();
     
-     }
-    
-
+    }
+  }
+  
     drawPlayer();
   
     if (!isCollided) {      // if the colliosn happens then:
@@ -114,7 +103,7 @@ void draw() {
         limit += 20;
       }
     }
-  
+  }
   else {
     moveMouse = false;
     text("Lives: "+(int)lives, width-200, 40);
@@ -163,7 +152,7 @@ void moveMeteor() {
 
   fill(255);
   text("Score: "+(int)score, 10, 40);
-  textSize(40);
+  textSize(30);
 }
 
 
@@ -183,6 +172,5 @@ void mouseDragged() {
 void reset(){
   score = 0;
   lives = Lives.getValueI();
-  difficulty = 10;
   fallingMeteor(-100, width + 20, -250, -80, difficulty);
 }
