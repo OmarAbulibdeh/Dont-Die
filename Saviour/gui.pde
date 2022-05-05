@@ -18,6 +18,7 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
   appc.background(230);
 } //_CODE_:window1:544590:
 
+//Pause/Resume function
 public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:463682:
   paused = !paused;
   if (paused){
@@ -28,65 +29,74 @@ public void button1_click1(GButton source, GEvent event) { //_CODE_:button1:4636
   }
 } //_CODE_:button1:463682:
 
+//Changing the difficulty of the game
 public void difficultyChange(GCustomSlider source, GEvent event) { //_CODE_:getDifficulty:897415:
   difficulty = getDifficulty.getValueI();
   reset();
 } //_CODE_:getDifficulty:897415:
 
+//Changing the amount of lives
 public void livesChange(GSlider source, GEvent event) { //_CODE_:Lives:537091:
   lives = Lives.getValueI();
 } //_CODE_:Lives:537091:
 
+//Resetting the game
 public void resetTrue(GButton source, GEvent event) { //_CODE_:button2:551383:
   loop();
   reset();
   difficulty = 10;
 } //_CODE_:button2:551383:
 
+//Easy Difficulty
 public void Easy(GButton source, GEvent event) { //_CODE_:button3:386511:
   reset();
   difficulty = 5;
   lives = 10;
 } //_CODE_:button3:386511:
 
-public void button4_click1(GButton source, GEvent event) { //_CODE_:button4:509320:
+//Medium Difficulty
+public void Medium(GButton source, GEvent event) { //_CODE_:button4:509320:
   reset();
   difficulty = 10;
   lives = 5;
 } //_CODE_:button4:509320:
 
-public void button5_click1(GButton source, GEvent event) { //_CODE_:button5:336071:
+//Hard Difficulty
+public void Hard(GButton source, GEvent event) { //_CODE_:button5:336071:
   reset();
   difficulty = 20;
   lives = 3;
 } //_CODE_:button5:336071:
 
-public void button6_click1(GButton source, GEvent event) { //_CODE_:button6:874250:
+//Impossible Difficulty
+public void Impossible(GButton source, GEvent event) { //_CODE_:button6:874250:
   reset();
   difficulty = 30;
   lives = 2;
 } //_CODE_:button6:874250:
 
-public void button7_click1(GButton source, GEvent event) { //_CODE_:button7:558653:
+//God Mode Difficulty
+public void godMode(GButton source, GEvent event) { //_CODE_:button7:558653:
   reset();
   difficulty = 100;
   lives = 99999;
 } //_CODE_:button7:558653:
 
-public void veryHard(GButton source, GEvent event) { //_CODE_:button8:360006:
+//Aim 100 Difficulty
+public void notPossible(GButton source, GEvent event) { //_CODE_:button8:360006:
   reset();
   difficulty = 100;
   lives = 1;
 } //_CODE_:button8:360006:
 
 public void sizeChange(GSlider source, GEvent event) { //_CODE_:MeteorSize:856759:
-  println("slider1 - GSlider >> GEvent." + event + " @ " + millis());
+  meteorSize = MeteorSize.getValueI();
 } //_CODE_:MeteorSize:856759:
 
 synchronized public void win_draw2(PApplet appc, GWinData data) { //_CODE_:window2:283432:
-  meteorSize = MeteorSize.getValueI();
 } //_CODE_:window2:283432:
 
+//Starting the game
 public void startGame(GButton source, GEvent event) { //_CODE_:Start:585618:
   loop();
 } //_CODE_:Start:585618:
