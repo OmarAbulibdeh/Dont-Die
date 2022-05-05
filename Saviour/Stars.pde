@@ -12,7 +12,9 @@ class Star {
     rise = true;
   }
   void display(){
+    //If not paused
     if (!paused){
+      //Flickering stars
       if(light >= 245){
         rise = false;
       }
