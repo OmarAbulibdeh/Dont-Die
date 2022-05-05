@@ -14,9 +14,8 @@ int lives = 4;
 boolean isCollided = false; // detects the collison between the Meteordrops and the player
 boolean lost = true;
 boolean hasHit = false;
-boolean paused = false;
-boolean moveMouse = true;
-boolean start = false;
+boolean paused = false;  //Detects if the game is paused
+boolean moveMouse = true; 
 
 ArrayList stars;
 Meteor[] Meteor;
@@ -24,7 +23,7 @@ Meteor[] Meteor;
 PImage ufoImg;
 PImage meteorImg;
 PImage explosionImg;
-
+//Meteor
 void fallingMeteor(int xMin, int xMax, int yMin, int yMax, int num) {
   Meteor = new Meteor[num];
 
@@ -39,7 +38,7 @@ void setup() {
   createGUI();
   noLoop();
   background(0);
-
+//Loading images
   ufoImg = loadImage("ufo.png");
   meteorImg = loadImage("meteor.png");
   explosionImg = loadImage("explosion.png");
@@ -75,7 +74,7 @@ void drawPlayer() {
 void draw() {
   background(0);
 
-  //Meteor.trail.add(new PVector);
+  //If not paused
   if (!paused){
   //background stars
     noStroke();
@@ -99,7 +98,7 @@ void draw() {
   
     drawPlayer();
   
-    if (!isCollided) {      // if the colliosn happens then:
+    if (!isCollided) {      // if the collision happens then:
       moveMeteor();
       if (score > limit && score < limit + 1) {
         fallingMeteor(-100, width + 20, -260, -80, difficulty); 
@@ -108,6 +107,7 @@ void draw() {
       }
     }
   }
+  //If the game is paused
   else {
     moveMouse = false;
     text("Lives: "+(int)lives, width-200, 40);
@@ -122,6 +122,7 @@ void draw() {
     drawPlayer();
   }
 }
+//Animation for falling meteor
 void moveMeteor() {
   for (int i = 0; i < Meteor.length; i++) {  // where the next group offalling Meteor will be summoned
     if (Meteor[i].yCor > height) {
@@ -173,6 +174,7 @@ void mouseDragged() {
   }
 }
 
+//Reseting function
 void reset(){
   score = 0;
   lives = Lives.getValueI();
